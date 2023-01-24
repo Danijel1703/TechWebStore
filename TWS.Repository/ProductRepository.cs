@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using TWS.DAL;
+using TWS.DAL.Entities;
+using TWS.Model;
 using TWS.Model.Common;
 using TWS.Repository.Common;
 
@@ -9,21 +12,26 @@ namespace TWS.Repository
     {
         private readonly TWSContext _dbContext;
 
-        public ProductRepository(TWSContext dbContext)
+        private readonly IMapper _mapper;
+
+        public ProductRepository(TWSContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<IProduct>> GetAll()
         {
-            IQueryable<IProduct> entities = _dbContext.Set<IProduct>();
-            return await entities.ToListAsync();
+            var entities = await _dbContext.Set<ProductEntity>().ToListAsync();
+            IEnumerable<IProduct> products = _mapper.Map<IEnumerable<Product>>(entities);
+            return products;
         }
 
         public async Task<IProduct> GetById(Guid id)
         {
-            var entity = await _dbContext.Set<IProduct>().FindAsync(id);
-            return entity;
+            var entity = await _dbContext.Set<ProductEntity>().FindAsync(id);
+            Product product = _mapper.Map<Product>(entity);
+            return product;
         }
 
         public async Task Create(IProduct entity)

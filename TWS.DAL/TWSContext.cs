@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TWS.Model;
+using TWS.DAL.Entities;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace TWS.DAL
 {
     public class TWSContext : DbContext
     {
-        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductEntity> Product { get; set; }
+        public DbSet<ManufacturerEntity> Manufacturer { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -14,7 +16,10 @@ namespace TWS.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Product>();
+            modelBuilder.Entity<ProductEntity>()
+                .HasOne<ManufacturerEntity>()
+                .WithMany(e => e.Products)
+                .HasForeignKey("ManufacturerId").OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
