@@ -48,11 +48,8 @@ namespace TWS.Repository
         {
             ManufacturerEntity newEntity = _mapper.Map<ManufacturerEntity>(manufacturer);
             ManufacturerEntity existingEntity = _dbContext.Set<ManufacturerEntity>().Where(entity => entity.Id == id).FirstOrDefault();
-            if (existingEntity != null)
-            {
-                existingEntity = newEntity;
-            }
-            await Task.FromResult(newEntity);
+            existingEntity.Name = newEntity.Name;
+            await Task.FromResult(existingEntity);
         }
 
         public async Task Delete(Guid id)

@@ -36,8 +36,9 @@ namespace TWS.Repository
 
         public async Task Create(IProduct entity)
         {
-            _dbContext.Set<IProduct>().Add(entity);
-            await Task.FromResult(entity);
+            ProductEntity product = _mapper.Map<ProductEntity>(entity);
+            _dbContext.Set<ProductEntity>().Add(product);
+            await Task.FromResult(product);
         }
 
         public async Task Delete(Guid id)

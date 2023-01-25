@@ -13,15 +13,19 @@ namespace TWS.Repository
     {
         private TWSContext _dbContext { get; set; }
         public IManufacturerRepository ManufacturerRepository { get; set; }
+
+        public IProductRepository ProductRepository { get; set; }
+
         public UnitOfWork(TWSContext dbContext, IMapper mapper) 
         { 
             _dbContext = dbContext;
             ManufacturerRepository = new ManufacturerRepository(dbContext, mapper);
+            ProductRepository= new ProductRepository(dbContext, mapper);
         }
 
-        public void Commit()
+        public async Task Commit()
         {
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
         public void Dispose()

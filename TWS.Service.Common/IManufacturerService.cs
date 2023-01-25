@@ -11,5 +11,7 @@ namespace TWS.Service.Common
     {
         public Task<IEnumerable<IManufacturer>> GetAllManufacturers();
         public Task AddManufacturer(IManufacturer manufacturer);
+        public Task DeleteManufacturer(Guid id);
+        public Task UpdateManufacturer(Guid id, IManufacturer manufacturer);
     }
 }

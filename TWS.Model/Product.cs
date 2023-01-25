@@ -6,10 +6,10 @@ namespace TWS.Model
     {
         public Guid Id { get; set; }
         public string Abrv { get; set; }
-
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
         public int InStockQty { get; set; }
+        public Guid ManufacturerId { get; set; }
     }
 }

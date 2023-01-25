@@ -29,5 +29,17 @@ namespace TWS.API.Controllers
             await ManufacturerService.AddManufacturer(manufacturer);
         }
 
+        [HttpPut(Name = "UpdateManufacturer")]
+        public async Task UpdateManufacturer(Guid id, Manufacturer manufacturer)
+        {
+            await ManufacturerService.UpdateManufacturer(id, manufacturer);
+        }
+
+        [HttpDelete(Name = "DeleteManufacturer")]
+        public async Task DeleteManufacturer(Guid id)
+        {
+            await ManufacturerService.DeleteManufacturer(id);
+        }
+
     }
 }

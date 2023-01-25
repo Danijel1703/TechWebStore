@@ -8,8 +8,10 @@ namespace TWS.Repository.Common
 {
     public interface IUnitOfWork : IDisposable
     {
-        public void Commit();
+        public Task Commit();
 
         public IManufacturerRepository ManufacturerRepository { get; set; }
+
+        public IProductRepository ProductRepository { get; set; }
     }
 }

@@ -21,5 +21,6 @@ namespace TWS.DAL
                 .WithMany(e => e.Products)
                 .HasForeignKey("ManufacturerId").OnDelete(DeleteBehavior.Cascade);
         }
+
     }
 }

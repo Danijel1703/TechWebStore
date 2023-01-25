@@ -27,7 +27,19 @@ namespace TWS.Service
         public async Task AddManufacturer(IManufacturer manufacturer)
         {
             await _unitOfWork.ManufacturerRepository.Create(manufacturer);
-            _unitOfWork.Commit();
+            await _unitOfWork.Commit();
+        }
+        
+        public async Task DeleteManufacturer(Guid id)
+        {
+            await _unitOfWork.ManufacturerRepository.Delete(id);
+            await _unitOfWork.Commit();
+        }
+
+        public async Task UpdateManufacturer(Guid id, IManufacturer manufacturer)
+        {
+            await _unitOfWork.ManufacturerRepository.Update(id, manufacturer);
+            await _unitOfWork.Commit();
         }
     }
 }
