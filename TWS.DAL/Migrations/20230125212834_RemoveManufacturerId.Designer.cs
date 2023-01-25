@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TWS.DAL;
 
@@ -11,9 +12,11 @@ using TWS.DAL;
 namespace TWS.DAL.Migrations
 {
     [DbContext(typeof(TWSContext))]
-    partial class TWSContextModelSnapshot : ModelSnapshot
+    [Migration("20230125212834_RemoveManufacturerId")]
+    partial class RemoveManufacturerId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,7 +61,7 @@ namespace TWS.DAL.Migrations
                     b.Property<int>("InStockQty")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ManufacturerId")
+                    b.Property<Guid?>("ManufacturerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -80,8 +83,7 @@ namespace TWS.DAL.Migrations
                     b.HasOne("TWS.DAL.Entities.ManufacturerEntity", null)
                         .WithMany("Products")
                         .HasForeignKey("ManufacturerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TWS.DAL.Entities.ManufacturerEntity", b =>
