@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TWS.Model.Common\TWS.Model.Common.csproj" />
+    <ProjectReference Include="..\TWS.Model\TWS.Model.csproj" />
   </ItemGroup>
 
 </Project>

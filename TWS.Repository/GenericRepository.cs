@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TWS.DAL;
+using TWS.Model;
+using TWS.Model.Common;
 using TWS.Repository.Common;
 
 namespace TWS.Repository
@@ -48,6 +50,12 @@ namespace TWS.Repository
             _dbContext.Set<TEntity>().Attach(entity);
             _dbContext.Set<TEntity>().Update(entity);
             await Task.FromResult(entity);
+        }
+
+        public virtual async Task<IEnumerable<TEntity>> GetPagedEntries(IPaging paging)
+        {
+            int skip = paging.PageSize * (paging.PageNumber - 1);
+            return await _dbContext.Set<TEntity>().Skip(skip).Take(paging.PageSize).ToListAsync();
         }
     }
 }

@@ -17,15 +17,16 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 {
     // Register dependencies
     builder.RegisterType<Mapper>().As<IMapper>();
-    builder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IGenericRepository<>));
-    builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
-    builder.RegisterType<ProductRepository>().As<IProductRepository>();
-    builder.RegisterType<ProductService>().As<IProductService>();
-    builder.RegisterType<ManufacturerRepository>().As<IManufacturerRepository>();
-    builder.RegisterType<ManufacturerService>().As<IManufacturerService>();
+    builder.RegisterType<Paging>().As<IPaging>();
+    builder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IGenericRepository<>)).InstancePerLifetimeScope();
+    builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
+    builder.RegisterType<ProductRepository>().As<IProductRepository>().InstancePerLifetimeScope();
+    builder.RegisterType<ProductService>().As<IProductService>().InstancePerLifetimeScope();
+    builder.RegisterType<ManufacturerRepository>().As<IManufacturerRepository>().InstancePerLifetimeScope();
+    builder.RegisterType<ManufacturerService>().As<IManufacturerService>().InstancePerLifetimeScope();
     builder.RegisterType<Product>().As<IProduct>();
     builder.RegisterType<Manufacturer>().As<IManufacturer>();
-    builder.RegisterType<TWSContext>();
+    builder.RegisterType<TWSContext>().InstancePerLifetimeScope();
 });
 
 builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(AutoMapperProfiles)));
@@ -44,6 +45,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(builder => builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 
 app.UseAuthorization();
 

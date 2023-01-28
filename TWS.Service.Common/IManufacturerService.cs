@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TWS.Model;
 using TWS.Model.Common;
 
 namespace TWS.Service.Common
@@ -13,5 +14,6 @@ namespace TWS.Service.Common
         public Task AddManufacturer(IManufacturer manufacturer);
         public Task DeleteManufacturer(Guid id);
         public Task UpdateManufacturer(Guid id, IManufacturer manufacturer);
+        public Task<IEnumerable<IManufacturer>> GetPagedManufacturers(IPaging paging);
     }
 }

@@ -8,5 +8,6 @@ namespace TWS.Service.Common
         Task CreateProduct(IProduct product);
         Task DeleteProduct(Guid id);
         Task UpdateProduct(Guid id, IProduct product);
+        Task<IEnumerable<IProduct>> GetPagedProducts(IPaging paging);
     }
 }

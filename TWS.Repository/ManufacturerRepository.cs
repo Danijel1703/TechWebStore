@@ -58,5 +58,13 @@ namespace TWS.Repository
             _dbContext.Set<ManufacturerEntity>().Remove(entity);
             await Task.FromResult(entity);
         }
+
+        public async Task <IEnumerable<IManufacturer>> GetPagedEntries(IPaging paging)
+        {
+            int skip = paging.PageSize * (paging.PageNumber - 1);
+            IEnumerable<ManufacturerEntity> entities = await _dbContext.Set<ManufacturerEntity>().Skip(skip).Take(paging.PageSize).ToListAsync();
+            IEnumerable<Manufacturer> result = _mapper.Map<IEnumerable<Manufacturer>>(entities);
+            return result;
+        }
     }
 }

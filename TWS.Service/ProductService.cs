@@ -41,5 +41,10 @@ namespace TWS.Service
             await _unitOfWork.ProductRepository.Delete(id);
             await _unitOfWork.Commit();
         }
+
+        public async Task<IEnumerable<IProduct>> GetPagedProducts(IPaging paging)
+        {
+            return await _repository.GetPagedEntries(paging);
+        }
     }
 }

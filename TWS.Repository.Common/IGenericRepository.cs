@@ -1,4 +1,7 @@
-﻿namespace TWS.Repository.Common
+﻿using TWS.Model;
+using TWS.Model.Common;
+
+namespace TWS.Repository.Common
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {
@@ -7,5 +10,6 @@
         Task Create(TEntity entity);
         Task Update(Guid id, TEntity entity);
         Task Delete(Guid id);
+        Task<IEnumerable<TEntity>> GetPagedEntries(IPaging paging);
     }
 }
