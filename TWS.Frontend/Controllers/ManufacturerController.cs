@@ -18,15 +18,7 @@ namespace TWS.API.Controllers
         }
 
         [HttpGet]
-        [Route("/manufacturer")]
-        public async Task<IManufacturer> GetManufacturerById(string id)
-        {
-            Guid entityId = new Guid(id);
-            return await ManufacturerService.GetManufacturerById(entityId);
-        }
-
-        [HttpGet]
-        [Route("/manufacturer-all")]
+        [Route("/manufacturers-all")]
         public async Task<IEnumerable<IManufacturer>> GetAllManufacturers()
         {
             return await ManufacturerService.GetAllManufacturers();
@@ -65,8 +57,7 @@ namespace TWS.API.Controllers
             await ManufacturerService.UpdateManufacturer(id, manufacturer);
         }
 
-        [HttpDelete]
-        [Route("/delete-manufacturer")]
+        [HttpDelete(Name = "/delete-manufacturer")]
         public async Task DeleteManufacturer(Guid id)
         {
             await ManufacturerService.DeleteManufacturer(id);

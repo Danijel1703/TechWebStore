@@ -16,13 +16,6 @@ namespace TWS.API.Controllers
             ProductService = productService;
         }
 
-        [HttpGet]
-        [Route("/product")]
-        public async Task<IProduct> GetProductById(string id)
-        {
-            Guid entityId = new Guid(id);
-            return await ProductService.GetProductById(entityId);
-        }
 
         [HttpGet]
         [Route("/product-all")]

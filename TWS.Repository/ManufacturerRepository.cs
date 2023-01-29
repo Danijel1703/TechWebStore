@@ -66,5 +66,22 @@ namespace TWS.Repository
             IEnumerable<Manufacturer> result = _mapper.Map<IEnumerable<Manufacturer>>(entities);
             return result;
         }
+
+        public async Task <IEnumerable<IManufacturer>> GetSortedEntries(ISort sort)
+        {
+            var entries = _dbContext.Set<ManufacturerEntity>();
+            IEnumerable<ManufacturerEntity> entities;
+            switch(sort.SortBy)
+            {
+                case "name_asc":
+                    entities = await entries.OrderBy(entity => entity.Name).ToListAsync(); break;
+                case "name_desc":
+                    entities = await entries.OrderByDescending(entity => entity.Name).ToListAsync(); break;
+                default:
+                    entities = await entries.OrderBy(entity => entity.Name).ToListAsync(); break;
+            }
+            IEnumerable<IManufacturer> result = _mapper.Map<IEnumerable<Manufacturer>>(entities);
+            return result;
+        }
     }
 }

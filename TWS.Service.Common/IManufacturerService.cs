@@ -15,5 +15,7 @@ namespace TWS.Service.Common
         public Task DeleteManufacturer(Guid id);
         public Task UpdateManufacturer(Guid id, IManufacturer manufacturer);
         public Task<IEnumerable<IManufacturer>> GetPagedManufacturers(IPaging paging);
+        public Task<IEnumerable<IManufacturer>> GetSortedManufacturers(ISort sort);
+        public Task<IManufacturer> GetManufacturerById(Guid id);
     }
 }

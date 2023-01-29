@@ -43,16 +43,20 @@ namespace TWS.Repository
 
         public async Task Delete(Guid id)
         {
-            IProduct entity = await GetById(id);
-            _dbContext.Set<IProduct>().Remove(entity);
+            ProductEntity entity = _dbContext.Set<ProductEntity>().Find(id);
+            _dbContext.Set<ProductEntity>().Remove(entity);
             await Task.FromResult(entity);
         }
 
         public async Task Update(Guid id, IProduct entity)
         {
-            _dbContext.Set<IProduct>().Attach(entity);
-            _dbContext.Set<IProduct>().Update(entity);
-            await Task.FromResult(entity);
+            ProductEntity newEntity = _mapper.Map<ProductEntity>(entity);
+            ProductEntity existingEntity = _dbContext.Set<ProductEntity>().Where(entity => entity.Id == id).FirstOrDefault();
+            existingEntity.Name = newEntity.Name;
+            existingEntity.Description = newEntity.Description;
+            existingEntity.Price = newEntity.Price;
+            existingEntity.SKU= newEntity.SKU;
+            await Task.FromResult(existingEntity);
         }
 
         public async Task<IEnumerable<IProduct>> GetPagedEntries(IPaging paging)
@@ -60,6 +64,27 @@ namespace TWS.Repository
             int skip = paging.PageSize * (paging.PageNumber - 1);
             IEnumerable<ProductEntity> entities = await _dbContext.Set<ProductEntity>().Skip(skip).Take(paging.PageSize).ToListAsync();
             IEnumerable<Product> result = _mapper.Map<IEnumerable<Product>>(entities);
+            return result;
+        }
+
+        public async Task<IEnumerable<IProduct>> GetSortedEntries(ISort sort)
+        {
+            var entries = _dbContext.Set<ProductEntity>();
+            IEnumerable<ProductEntity> entities;
+            switch (sort.SortBy)
+            {
+                case "name_asc":
+                    entities = await entries.OrderBy(entity => entity.Name).ToListAsync(); break;
+                case "name_desc":
+                    entities = await entries.OrderByDescending(entity => entity.Name).ToListAsync(); break;
+                case "price_asc":
+                    entities = await entries.OrderBy(entity => entity.Price).ToListAsync(); break;
+                case "price_desc":
+                    entities = await entries.OrderByDescending(entity => entity.Price).ToListAsync(); break;
+                default:
+                    entities = await entries.OrderBy(entity => entity.Name).ToListAsync(); break;
+            }
+            IEnumerable<IProduct> result = _mapper.Map<IEnumerable<Product>>(entities);
             return result;
         }
     }

@@ -46,5 +46,14 @@ namespace TWS.Service
         {
             return await _repository.GetPagedEntries(paging);
         }
+
+        public async Task<IEnumerable<IProduct>> GetSortedProducts(ISort sort)
+        {
+            return await _repository.GetSortedEntries(sort);
+        }
+        public async Task<IProduct> GetProductById(Guid id)
+        {
+            return await _repository.GetById(id);
+        }
     }
 }
