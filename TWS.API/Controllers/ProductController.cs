@@ -71,5 +71,15 @@ namespace TWS.API.Controllers
         {
             await ProductService.DeleteProduct(id);
         }
+
+        [HttpGet]
+        [Route("/search-product")]
+        public async Task<IEnumerable<IProduct>> GetSearchManufacturers(string property, string searchPhrase)
+        {
+            Search search = new Search();
+            search.Property = property;
+            search.SearchPhrase = searchPhrase;
+            return await ProductService.GetSearchProducts(search);
+        }
     }
 }

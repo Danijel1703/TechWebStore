@@ -17,5 +17,7 @@ namespace TWS.Service.Common
         public Task<IEnumerable<IManufacturer>> GetPagedManufacturers(IPaging paging);
         public Task<IEnumerable<IManufacturer>> GetSortedManufacturers(ISort sort);
         public Task<IManufacturer> GetManufacturerById(Guid id);
+        public Task<IEnumerable<IManufacturer>> GetSearchManufacturers(ISearch search);
+
     }
 }

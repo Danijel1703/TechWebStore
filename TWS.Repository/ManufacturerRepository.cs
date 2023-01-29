@@ -83,5 +83,20 @@ namespace TWS.Repository
             IEnumerable<IManufacturer> result = _mapper.Map<IEnumerable<Manufacturer>>(entities);
             return result;
         }
+
+        public async Task<IEnumerable<IManufacturer>> GetSearchEntries(ISearch search)
+        {
+            var entries = _dbContext.Set<ManufacturerEntity>();
+            IEnumerable<ManufacturerEntity> entities;
+            switch (search.Property)
+            {
+                case "name":
+                    entities = await entries.Where(entity => entity.Name.Contains(search.SearchPhrase)).ToListAsync(); break;
+                default:
+                    entities = await entries.OrderBy(entity => entity.Name).ToListAsync(); break;
+            }
+            IEnumerable<IManufacturer> result = _mapper.Map<IEnumerable<Manufacturer>>(entities);
+            return result;
+        }
     }
 }

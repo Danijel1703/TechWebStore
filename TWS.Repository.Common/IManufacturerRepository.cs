@@ -10,5 +10,6 @@ namespace TWS.Repository.Common
     public interface IManufacturerRepository : IGenericRepository<IManufacturer>
     {
         Task<IEnumerable<IManufacturer>> GetSortedEntries(ISort sort);
+        Task<IEnumerable<IManufacturer>> GetSearchEntries(ISearch search);
     }
 }

@@ -57,5 +57,9 @@ namespace TWS.Service
         {
             return await _repository.GetById(id);
         }
+        public async Task<IEnumerable<IManufacturer>> GetSearchManufacturers(ISearch search)
+        {
+            return await _repository.GetSearchEntries(search);
+        }
     }
 }

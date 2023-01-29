@@ -11,5 +11,6 @@ namespace TWS.Service.Common
         Task<IEnumerable<IProduct>> GetPagedProducts(IPaging paging);
         Task<IEnumerable<IProduct>> GetSortedProducts(ISort sort);
         public Task<IProduct> GetProductById(Guid id);
+        public Task<IEnumerable<IProduct>> GetSearchProducts(ISearch search);
     }
 }
